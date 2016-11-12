@@ -16,7 +16,7 @@
 * 微信小程序 Nuget 地址：https://www.nuget.org/packages/Senparc.Weixin.WxOpen
 * 命令：
 ```
-PM> Install-Package Senparc.Weixin.Senparc.Weixin.WxOpen
+PM> Install-Package Senparc.Weixin.WxOpen
 ```
 
 
