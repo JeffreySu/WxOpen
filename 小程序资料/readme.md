@@ -3,7 +3,7 @@
 
 服务器端SDK
 ----------
-[Senparc.Weixin.MP.dll](https://github.com/JeffreySu/WeiXinMPSDK) 完全兼容微信小程序开发！
+[Senparc.Weixin.MP.dll](https://github.com/JeffreySu/WeiXinMPSDK) + [Senparc.Weixin.WxOpen](https://github.com/JeffreySu/WxOpen)完美支持微信小程序开发！
 
 
 QQ群
