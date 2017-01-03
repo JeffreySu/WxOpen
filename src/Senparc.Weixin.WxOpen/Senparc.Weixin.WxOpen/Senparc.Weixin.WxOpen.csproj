@@ -52,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AdvancedAPIs\Template\TemplateApi.cs" />
     <Compile Include="AdvancedAPIs\Template\TemplateJson\TempleteModel.cs" />
+    <Compile Include="MessageHandlers\WxOpenMessageHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
