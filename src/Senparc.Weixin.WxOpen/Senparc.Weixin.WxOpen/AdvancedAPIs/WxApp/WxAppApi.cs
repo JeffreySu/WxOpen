@@ -69,7 +69,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp
         /// <param name="auto_color">自动配置线条颜色</param>
         /// <param name="timeOut">请求超时时间</param>
         /// <returns></returns>
-        public static WxJsonResult GetWxaCode(string accessTokenOrAppId, Stream stream, string path, int width = 430, bool auto_color = false , int timeOut = Config.TIME_OUT)
+        public static WxJsonResult GetWxaCode(string accessTokenOrAppId, Stream stream, string path, int width = 430, bool auto_color = false, int timeOut = Config.TIME_OUT)
         {
             return ApiHandlerWapper.TryCommonApi(accessToken =>
             {
@@ -102,6 +102,63 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp
             using (var ms = new MemoryStream())
             {
                 var result = WxAppApi.GetWxaCode(accessTokenOrAppId, ms, path, width);
+                ms.Seek(0, SeekOrigin.Begin);
+                //储存图片
+                File.Delete(filePath);
+                using (var fs = new FileStream(filePath, FileMode.CreateNew))
+                {
+                    ms.CopyTo(fs);
+                    fs.Flush();
+                }
+                return result;
+            }
+        }
+
+        /// <summary>
+        /// 获取小程序页面的小程序码 不限制
+        /// </summary>
+        /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+        /// <param name="stream">储存小程序码的流</param>
+        /// <param name="scene">最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）</param>
+        /// <param name="path">必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面</param>
+        /// <param name="width">小程序码的宽度</param>
+        /// <param name="auto_color">自动配置线条颜色</param>
+        /// <param name="timeOut">请求超时时间</param>
+        /// <returns></returns>
+        public static WxJsonResult GetWxaCodeUnlimit(string accessTokenOrAppId, Stream stream, string scene, string path, int width = 430, bool auto_color = false, int timeOut = Config.TIME_OUT)
+        {
+            return ApiHandlerWapper.TryCommonApi(accessToken =>
+            {
+                const string urlFormat = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={0}";
+                var url = string.Format(urlFormat, accessToken);
+
+                var data = new { scene = scene, path = path, width = width };
+                SerializerHelper serializerHelper = new SerializerHelper();
+                Post.Download(url, serializerHelper.GetJsonString(data), stream);
+
+                return new WxJsonResult()
+                {
+                    errcode = ReturnCode.请求成功
+                };
+            }, accessTokenOrAppId);
+        }
+
+        /// <summary>
+        /// 获取小程序页面的小程序码
+        /// </summary>
+        /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+        /// <param name="filePath">储存图片的物理路径</param>
+        /// <param name="scene">最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）</param>
+        /// <param name="path">必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面</param>
+        /// <param name="width">二维码的宽度</param>
+        /// <param name="auto_color">自动配置线条颜色</param>
+        /// <param name="timeOut">请求超时时间</param>
+        /// <returns></returns>
+        public static WxJsonResult GetWxaCodeUnlimit(string accessTokenOrAppId, string filePath, string scene, string path, int width = 430, bool auto_color = false, int timeOut = Config.TIME_OUT)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var result = WxAppApi.GetWxaCodeUnlimit(accessTokenOrAppId, ms, scene, path, width);
                 ms.Seek(0, SeekOrigin.Begin);
                 //储存图片
                 File.Delete(filePath);
@@ -214,6 +271,64 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp
             using (var ms = new MemoryStream())
             {
                 var result = await WxAppApi.GetWxaCodeAsync(accessTokenOrAppId, ms, path, width);
+                ms.Seek(0, SeekOrigin.Begin);
+                //储存图片
+                File.Delete(filePath);
+                using (var fs = new FileStream(filePath, FileMode.CreateNew))
+                {
+                    await ms.CopyToAsync(fs);
+                    await fs.FlushAsync();
+                }
+                return result;
+            }
+        }
+
+
+        /// <summary>
+        /// 获取小程序页面的小程序码 不受限制
+        /// </summary>
+        /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+        /// <param name="stream">储存小程序码的流</param>
+        /// <param name="scene">最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）</param>
+        /// <param name="path">必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面</param>
+        /// <param name="width">小程序码的宽度</param>
+        /// <param name="auto_color">自动配置线条颜色</param>
+        /// <param name="timeOut">请求超时时间</param>
+        /// <returns></returns>
+        public static async Task<WxJsonResult> GetWxaCodeUnlimitAsync(string accessTokenOrAppId, Stream stream, string scene, string path, int width = 430, bool auto_color = false, int timeOut = Config.TIME_OUT)
+        {
+            return await ApiHandlerWapper.TryCommonApiAsync(async accessToken =>
+            {
+                const string urlFormat = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token={0}";
+                var url = string.Format(urlFormat, accessToken);
+
+                var data = new { scene = scene, path = path, width = width };
+                SerializerHelper serializerHelper = new SerializerHelper();
+                await Post.DownloadAsync(url, serializerHelper.GetJsonString(data), stream);
+
+                return new WxJsonResult()
+                {
+                    errcode = ReturnCode.请求成功
+                };
+            }, accessTokenOrAppId);
+        }
+
+        /// <summary>
+        /// 获取小程序页面的小程序码
+        /// </summary>
+        /// <param name="accessTokenOrAppId">AccessToken或AppId（推荐使用AppId，需要先注册）</param>
+        /// <param name="filePath">储存图片的物理路径</param>
+        /// <param name="scene">最大32个可见字符，只支持数字，大小写英文以及部分特殊字符：!#$&'()*+,/:;=?@-._~，其它字符请自行编码为合法字符（因不支持%，中文无法使用 urlencode 处理，请使用其他编码方式）</param>
+        /// <param name="path">必须是已经发布的小程序页面，例如 "pages/index/index" ,如果不填写这个字段，默认跳主页面</param>
+        /// <param name="width">二维码的宽度</param>
+        /// <param name="auto_color">自动配置线条颜色</param>
+        /// <param name="timeOut">请求超时时间</param>
+        /// <returns></returns>
+        public static async Task<WxJsonResult> GetWxaCodeUnlimitAsync(string accessTokenOrAppId, string filePath, string scene, string path, int width = 430, bool auto_color = false, int timeOut = Config.TIME_OUT)
+        {
+            using (var ms = new MemoryStream())
+            {
+                var result = await WxAppApi.GetWxaCodeUnlimitAsync(accessTokenOrAppId, ms, scene, path, width);
                 ms.Seek(0, SeekOrigin.Begin);
                 //储存图片
                 File.Delete(filePath);
