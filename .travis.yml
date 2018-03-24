@@ -1,2 +1,2 @@
 language: csharp
-solution: ./src/Senparc.Weixin.WxOpen/Senparc.Weixin.WxOpen.sln
+solution: ./src/Senparc.Weixin.WxOpen/Senparc.Weixin.WxOpen.net45.sln
