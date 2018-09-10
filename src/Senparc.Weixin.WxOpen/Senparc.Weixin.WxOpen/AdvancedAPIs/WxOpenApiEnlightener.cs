@@ -8,9 +8,10 @@ using Senparc.NeuChar.ApiHandlers;
 
 namespace Senparc.Weixin.WxOpen.AdvancedAPIs
 {
-    public class WxOpenApiEnlighten : ApiEnlighten
+    public class WxOpenApiEnlightener : ApiEnlightener
     {
-        public static ApiEnlighten Instance = new WxOpenApiEnlighten();
+        public static ApiEnlightener Instance = new WxOpenApiEnlightener();
+        public override NeuChar.PlatformType PlatformType { get; set; } = NeuChar.PlatformType.WeChat_MiniProgram;
 
         /// <summary>
         /// 发送文本客服消息
