@@ -21,49 +21,58 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 /*----------------------------------------------------------------
     Copyright (C) 2019 Senparc
     
-    文件名：RequestMessageEvent_UserEnterTempSession.cs
-    文件功能描述：事件之地点审核
+    文件名：WxDatabaseMigrateJsonResult.cs
+    文件功能描述：数据库操作记录的各类返回结果
     
     
-    创建标识：Senparc - 20170107
-    
-    修改标识：Senparc - 20190615
-    修改描述：修复附近的小程序添加地点，修改注释
+    创建标识：lishewen - 20190530
+   
 ----------------------------------------------------------------*/
 
-namespace Senparc.Weixin.WxOpen.Entities
+using Senparc.Weixin.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb
 {
     /// <summary>
-    /// 事件之地点审核
+    /// 数据库导入/导出 返回结果
     /// </summary>
-    public class RequestMessageEvent_AddNearbyPoiAuditInfo : RequestMessageEventBase, IRequestMessageEventBase
+    public class WxDatabaseMigrateJsonResult : WxJsonResult
     {
         /// <summary>
-        /// 事件类型
+        /// 任务ID，可使用数据库迁移进度查询 API 查询进度及结果
         /// </summary>
-        public override Event Event
-        {
-            get { return Event.add_nearby_poi_audit_info; }
-        }
+        public int job_id { get; set; }
+    }
 
+    /// <summary>
+    /// 数据库迁移状态查询 返回结果
+    /// </summary>
+    public class WxDatabaseMigrateQueryInfoJsonResult : WxJsonResult
+    {
         /// <summary>
-        /// 审核单id
+        /// 导出状态
         /// </summary>
-        public string audit_id { get; set; }
-
+        public string status { get; set; }
         /// <summary>
-        /// 审核状态（3：审核通过，2：审核失败）
+        /// 导出成功记录数
         /// </summary>
-        public int status { get; set; }
-
+        public int record_success { get; set; }
         /// <summary>
-        /// 如果status为2，会返回审核失败的原因
+        /// 导出失败记录数
         /// </summary>
-        public string reason { get; set; }
-
+        public int record_fail { get; set; }
         /// <summary>
-        /// poi_id
+        /// 导出错误信息
         /// </summary>
-        public string poi_id { get; set; }
+        public string err_msg { get; set; }
+        /// <summary>
+        /// 导出文件下载地址
+        /// </summary>
+        public string file_url { get; set; }
     }
 }

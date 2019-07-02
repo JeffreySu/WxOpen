@@ -21,15 +21,12 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 /*----------------------------------------------------------------
     Copyright (C) 2019 Senparc
     
-    文件名：GetNearbyPoiListJsonResult.cs
-    文件功能描述：GetNearbyPoiList 接口结果
+    文件名：WxFileJsonResult.cs
+    文件功能描述：文件相关接口 返回结果
     
     
-    创建标识：Senparc - 20180106
-    
-    修改标识：Senparc - 20190615
-    修改描述：修复附近的小程序添加地点
-
+    创建标识：lishewen - 20190530
+   
 ----------------------------------------------------------------*/
 
 using Senparc.Weixin.Entities;
@@ -39,80 +36,80 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Senparc.Weixin.WxOpen.AdvancedAPIs.WxApp.WxAppJson
+namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb
 {
     /// <summary>
-    /// 添加地点返回结果
+    /// 获取文件上传链接 返回结果
     /// </summary>
-    public class GetNearbyPoiListJsonResult : WxJsonResult
-    {
-        public Data data { get; set; }
-    }
-
-    [Serializable]
-    public class Data
+    public class WxUploadFileJsonResult : WxJsonResult
     {
         /// <summary>
-        /// 剩余可添加地点个数
+        /// 上传url
         /// </summary>
-        public int left_apply_num { get; set; }
-
+        public string url { get; set; }
+        public string token { get; set; }
+        public string authorization { get; set; }
         /// <summary>
-        /// 最大可添加地点个数
+        /// 文件ID
         /// </summary>
-        public int max_apply_num { get; set; }
-
+        public string file_id { get; set; }
         /// <summary>
-        /// 地址列表的 JSON 格式字符串
+        /// cos文件ID
         /// </summary>
-        public PoiList data { get; set; }
-    }
-
-    [Serializable]
-    public class PoiList
-    {
-        public List<PoiInfo> poi_list { get; set; }
+        public string cos_file_id { get; set; }
     }
 
     /// <summary>
-    /// 地点详情
+    /// 获取文件下载链接 返回结果
     /// </summary>
-    [Serializable]
-    public class PoiInfo
+    public class WxDownloadFileJsonResult : WxJsonResult
     {
         /// <summary>
-        /// 附近地点 ID
+        /// 文件列表
         /// </summary>
-        public string poi_id { get; set; }
+        public Result_File_List[] file_list { get; set; }
+    }
 
+    /// <summary>
+    /// 删除文件 返回结果
+    /// </summary>
+    public class WxDeleteFileJsonResult : WxJsonResult
+    {
         /// <summary>
-        /// 资质证件地址
+        /// 文件列表
         /// </summary>
-        public string qualification_address { get; set; }
+        public Result_File_List[] delete_list { get; set; }
+    }
 
+    public class Result_File_List
+    {
         /// <summary>
-        /// 资质证件证件号
+        /// 文件ID
         /// </summary>
-        public string qualification_num { get; set; }
+        public string fileid { get; set; }
+        /// <summary>
+        /// 下载链接
+        /// </summary>
+        public string download_url { get; set; }
+        /// <summary>
+        /// 状态码
+        /// </summary>
+        public int status { get; set; }
+        /// <summary>
+        /// 该文件错误信息
+        /// </summary>
+        public string errmsg { get; set; }
+    }
 
+    public class FileItem
+    {
         /// <summary>
-        /// 地点审核状态
-        /// 3	审核中
-        /// 4	审核失败
-        /// 5	审核通过
+        /// 文件ID
         /// </summary>
-        public int audit_status { get; set; }
-
+        public string fileid { get; set; }
         /// <summary>
-        /// 地点展示在附近状态
-        /// 0	未展示
-        /// 1	展示中
+        /// 下载链接有效期
         /// </summary>
-        public int display_status { get; set; }
-
-        /// <summary>
-        /// 审核失败原因，audit_status=4 时返回
-        /// </summary>
-        public string refuse_reason { get; set; }
+        public int max_age { get; set; }
     }
 }

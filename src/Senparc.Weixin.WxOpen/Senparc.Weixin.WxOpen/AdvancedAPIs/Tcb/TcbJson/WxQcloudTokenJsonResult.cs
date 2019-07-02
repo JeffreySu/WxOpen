@@ -21,49 +21,34 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 /*----------------------------------------------------------------
     Copyright (C) 2019 Senparc
     
-    文件名：RequestMessageEvent_UserEnterTempSession.cs
-    文件功能描述：事件之地点审核
+    文件名：WxQcloudTokenJsonResult.cs
+    文件功能描述：获取腾讯云API调用凭证 返回结果
     
     
-    创建标识：Senparc - 20170107
-    
-    修改标识：Senparc - 20190615
-    修改描述：修复附近的小程序添加地点，修改注释
+    创建标识：lishewen - 20190530
+   
 ----------------------------------------------------------------*/
 
-namespace Senparc.Weixin.WxOpen.Entities
+using Senparc.Weixin.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Senparc.Weixin.WxOpen.AdvancedAPIs.Tcb
 {
     /// <summary>
-    /// 事件之地点审核
+    /// 获取腾讯云API调用凭证 返回结果
     /// </summary>
-    public class RequestMessageEvent_AddNearbyPoiAuditInfo : RequestMessageEventBase, IRequestMessageEventBase
+    public class WxQcloudTokenJsonResult : WxJsonResult
     {
+        public string secretid { get; set; }
+        public string secretkey { get; set; }
+        public string token { get; set; }
         /// <summary>
-        /// 事件类型
+        /// 过期时间戳
         /// </summary>
-        public override Event Event
-        {
-            get { return Event.add_nearby_poi_audit_info; }
-        }
-
-        /// <summary>
-        /// 审核单id
-        /// </summary>
-        public string audit_id { get; set; }
-
-        /// <summary>
-        /// 审核状态（3：审核通过，2：审核失败）
-        /// </summary>
-        public int status { get; set; }
-
-        /// <summary>
-        /// 如果status为2，会返回审核失败的原因
-        /// </summary>
-        public string reason { get; set; }
-
-        /// <summary>
-        /// poi_id
-        /// </summary>
-        public string poi_id { get; set; }
+        public int expired_time { get; set; }
     }
 }
