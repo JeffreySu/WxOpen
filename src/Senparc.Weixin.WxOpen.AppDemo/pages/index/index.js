@@ -3,7 +3,7 @@
 var app = getApp()
 Page({
   data: {
-    motto: 'Senparc.Weixin SDK Demo v2019.7.7',
+    motto: 'Senparc.Weixin SDK Demo v2019.8.19',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
@@ -17,7 +17,7 @@ Page({
 
   bindWebsocketTap: function(){
     wx.navigateTo({
-      url: '../websocket_signalr/websocket_signalr'
+      url: '../websocket_signalr/websocket_signalr'// 此页面对应 .net core demo，如果为 .net framework，请使用'../websocket_signalr/websocket'
     })
   },
 
