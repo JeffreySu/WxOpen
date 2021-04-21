@@ -1,7 +1,7 @@
 ﻿#region Apache License Version 2.0
 /*----------------------------------------------------------------
 
-Copyright 2019 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
+Copyright 2021 Jeffrey Su & Suzhou Senparc Network Technology Co.,Ltd.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file
 except in compliance with the License. You may obtain a copy of the License at
@@ -18,7 +18,7 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
 ----------------------------------------------------------------*/
 #endregion Apache License Version 2.0
 /*----------------------------------------------------------------
-    Copyright (C) 2019 Senparc
+    Copyright (C) 2021 Senparc
     
     文件名：CustomAPI.cs
     文件功能描述：小程序订阅消息接口
@@ -26,6 +26,9 @@ Detail: https://github.com/JeffreySu/WeiXinMPSDK/blob/master/license.md
     
     创建标识：Senparc - 20191014
     
+        
+    修改标识：Senparc - 20190917
+    修改描述：v3.6.0 支持新版本 MessageHandler 和 WeixinContext，支持使用分布式缓存储存上下文消息
 
 
 ----------------------------------------------------------------*/
@@ -75,7 +78,7 @@ namespace Senparc.Weixin.WxOpen.AdvancedAPIs
                     page = page,
                     data = data
                 };
-                return CommonJsonSend.Send(accessToken, urlFormat, data, timeOut: timeOut);
+                return CommonJsonSend.Send(accessToken, urlFormat, submitData, timeOut: timeOut);
 
             }, accessTokenOrAppId);
         }
